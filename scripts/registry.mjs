@@ -10,7 +10,7 @@ const login = /^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$/;
 const allowed = new Set(['A', 'AAAA', 'CAA', 'CNAME', 'DS', 'MX', 'NS', 'TXT']);
 
 const isObject = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
-const validName = (s) => typeof s === 'string' && s.length <= 253 && s.split('.').every((part) => label.test(part));
+const validName = (s) => typeof s === 'string' && s.length <= 253 && s.split('.').every((part) => label.test(part) && !part.includes('--'));
 const hostname = (s) => typeof s === 'string' && s.length <= 253 && s.split('.').length >= 2 && validName(s.replace(/\.$/, ''));
 const list = (x) => Array.isArray(x) && x.length > 0;
 const number = (n, max = 65535) => Number.isInteger(n) && n >= 0 && n <= max;

@@ -3,11 +3,11 @@
 **Not yet in effect. Public registration is not open.**
 
 ## Purpose
-WNIC proposes to assign names below \`westarctica.net\` to approved people, institutions, and services associated with Westarctica. Assignments remain subordinate to the operator's control of the parent domain; they are **not** ICANN-accredited registrations or property interests.
+WNIC proposes to assign names below `westarctica.net` to approved people, institutions, and services associated with Westarctica. Assignments remain subordinate to the operator's control of the parent domain; they are **not** ICANN-accredited registrations or property interests.
 
 ## Names
-- Reserved operational names such as \`nic\`, \`ca\`, and \`www\` cannot be claimed through ordinary applications.
-- Institutional identifiers such as \`ellsworth\` belong to the institution or office, not the current officeholder. The public GitHub username is an operational custodian, not proof of personal ownership.
+- Reserved operational names such as `nic`, `ca`, and `www` cannot be claimed through ordinary applications.
+- Institutional identifiers such as `ellsworth` belong to the institution or office, not the current officeholder. The public GitHub username is an operational custodian, not proof of personal ownership.
 - Names may be refused or reassigned for impersonation, abuse, confusion, conflict, or operational necessity, following a documented decision.
 - Nested names require control of the parent registration and may not be created beneath a delegated NS zone.
 
