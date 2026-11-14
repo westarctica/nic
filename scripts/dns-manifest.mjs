@@ -1,6 +1,6 @@
 import { loadRegistry, zoneName } from './registry.mjs';
 
-const { entries, errors } = loadRegistry();
+const { entries, institutions, errors } = loadRegistry();
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exitCode = 1;
@@ -12,5 +12,5 @@ if (errors.length) {
     records: entry.records
   }));
   // This is a proposed-state export only. It does not read or change live DNS.
-  console.log(JSON.stringify({ zone: zoneName, mode: 'dry-run-only', registrations }, null, 2));
+  console.log(JSON.stringify({ zone: zoneName, mode: 'dry-run-only', registrations, institutionalAssignmentsWithoutDNS: [...institutions.keys()].sort() }, null, 2));
 }

@@ -77,6 +77,32 @@ export function loadRegistry(root = repoRoot) {
     errors.push(...validateRegistration(name, data, reserved));
     entries.set(name, data);
   }
+  const institutions = new Map();
+  let institutionData;
+  try {
+    institutionData = JSON.parse(readFileSync(join(root, 'data/institutions.json'), 'utf8'));
+  } catch (error) {
+    errors.push('data/institutions.json: ' + error.message);
+    institutionData = {};
+  }
+  if (!isObject(institutionData)) {
+    errors.push('data/institutions.json: expected a map of institutional assignments');
+    institutionData = {};
+  }
+  for (const [name, assignment] of Object.entries(institutionData)) {
+    if (!validName(name) || name.includes('.')) errors.push(name + ': institutional assignment must be a valid single-label name');
+    if (!reserved.includes(name)) errors.push(name + ': institutional name must also be protected in reserved.json');
+    if (entries.has(name)) errors.push(name + ': institutional name cannot also have a public registration');
+    if (!isObject(assignment) ||
+        Object.keys(assignment).some((key) => !['holder', 'custodian', 'status', 'dns'].includes(key)) ||
+        typeof assignment.holder !== 'string' || !assignment.holder.trim() || assignment.holder.length > 120 ||
+        !login.test(assignment.custodian ?? '') ||
+        assignment.status !== 'assigned' ||
+        assignment.dns !== 'pending') {
+      errors.push(name + ': invalid institutional assignment metadata');
+    }
+    institutions.set(name, assignment);
+  }
   for (const [name, entry] of entries) {
     const bits = name.split('.');
     for (let i = 1; i < bits.length; i++) {
@@ -88,5 +114,5 @@ export function loadRegistry(root = repoRoot) {
         errors.push(name + ': nested registration must retain parent custodian');
     }
   }
-  return { entries, reserved, errors };
+  return { entries, reserved, institutions, errors };
 }
