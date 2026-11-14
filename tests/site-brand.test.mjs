@@ -7,6 +7,7 @@ import { repoRoot } from '../scripts/registry.mjs';
 const html = readFileSync(join(repoRoot, 'site/index.html'), 'utf8');
 const css = readFileSync(join(repoRoot, 'site/styles.css'), 'utf8');
 const badge = readFileSync(join(repoRoot, 'site/images/waq-coa-badge.svg'), 'utf8');
+const arms = readFileSync(join(repoRoot, 'site/images/waq-coa-arms.svg'), 'utf8');
 
 test('NIC is presented as a service of the College', () => {
   assert.match(html, /Westarctican College of Arms/);
@@ -37,6 +38,17 @@ test('NIC uses the revised three-column College footer and links', () => {
   }
   assert.match(css, /grid-template-columns:\s*1\.3fr 1fr 1fr/);
   assert.match(css, /\.footer-identity\s*\{\s*grid-column:\s*1\/-1/);
+});
+
+test('Full College of Arms achievement is used in masthead; badge remains favicon and footer', () => {
+  const header = html.slice(html.indexOf('<header class="masthead">'), html.indexOf('</header>'));
+  const footer = html.slice(html.indexOf('<footer class="site-footer">'));
+  assert.match(arms, /<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
+  assert.match(header, /src="\/images\/waq-coa-arms\.svg"[^>]*width="94" height="110"/);
+  assert.doesNotMatch(header, /src="\/images\/waq-coa-badge\.svg"/);
+  assert.match(html, /rel="icon"[^>]*href="\/images\/waq-coa-badge\.svg"/);
+  assert.match(footer, /src="\/images\/waq-coa-badge\.svg"/);
+  assert.match(css, /\.college-brand img\s*\{\s*width:\s*90px;\s*height:\s*106px/);
 });
 
 test('Heraldic badge asset and College design colors exist locally', () => {
