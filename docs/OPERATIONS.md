@@ -9,13 +9,19 @@
 
 ## Stage 1: publishing the website
 
-The `site/` directory is a simple static website. Deploy with Cloudflare Pages using:
-- Build command: `npm run build:site`
-- Output directory: `dist`
-- Root directory: repository root
-- Custom hostname: `nic.westarctica.net` (configure explicitly in Cloudflare)
+The `site/` directory is a static website served as a Cloudflare Worker with static assets. The repository includes `wrangler.jsonc`.
 
-Deployment only hosts the website; it does not publish registrations or manipulate the DNS zone.
+Cloudflare Workers Builds settings:
+- Production branch: `main`
+- Root directory: repository root
+- Build command: `npm run build:site`
+- Deploy command: `npx wrangler deploy`
+- Preview command: `npx wrangler preview` (requires Wrangler 4.135.0 or later)
+- Custom hostname: `nic.westarctica.net` (attach in Cloudflare after deploying)
+
+Use a recent Wrangler release in the build environment. Preview builds should be configured with their own host and cannot change live production DNS.
+
+Deployment hosts the website only; it does not publish registrations or alter registrant DNS records.
 
 ## Stage 2: enabling registration
 
