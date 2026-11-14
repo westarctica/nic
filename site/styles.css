@@ -91,9 +91,9 @@ main { max-width: var(--page); margin: auto; padding: 0 2rem 5rem; min-height: 3
 .institution-records code { color: var(--ink); font-size: 1rem; overflow-wrap: anywhere; }
 .institution-records p { color: var(--muted); font-size: .8rem; margin: .45rem 0 0; }
 
-/* Copied from the College of Arms footer rules; preserve its layout and spacing. */
+/* Synchronized with the revised three-column College of Arms footer. */
 .site-footer { background: var(--ink); color: #e8edf2; border-top: 4px double var(--gold); font-size: .8rem; }
-.footer-inner { max-width: var(--page); margin: auto; display: grid; grid-template-columns: 1.3fr 1fr 1.2fr 1fr; gap: 2.5rem; padding: 2.8rem 2rem; }
+.footer-inner { max-width: var(--page); margin: auto; display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 2.5rem; padding: 2.8rem 2rem; }
 .site-footer a { color: #e8edf2; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 .footer-identity > a { font: 1.4rem/1.3 var(--serif); }
@@ -139,7 +139,8 @@ main { max-width: var(--page); margin: auto; padding: 0 2rem 5rem; min-height: 3
   .section-heading { display: block; }
   .prelaunch-mark { display: inline-block; margin-top: 1rem; }
   .principle-grid { grid-template-columns: 1fr; gap: 1.1rem; }
-  .footer-inner { grid-template-columns: repeat(2,1fr); padding: 2rem 1.25rem; gap: 2rem 1.5rem; }
+  .footer-inner { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 2rem 1.25rem; gap: 2rem 1.5rem; }
+  .footer-identity { grid-column: 1/-1; }
   .footer-colophon { margin: 0 1.25rem; display: block; font-size: .65rem; }
   .footer-colophon > .college-service-identity { display: flex; width: 100%; margin-bottom: 1rem; }
   .footer-colophon > a:last-child { display: block; }

@@ -14,18 +14,29 @@ test('NIC is presented as a service of the College', () => {
   assert.match(html, /nic\.westarctica\.net/);
 });
 
-test('College footer has all four columns and source-linked destinations', () => {
-  assert.match(html, /<footer class="site-footer">/);
-  for (const text of ['The College', 'Armorial &amp; Reference', 'Westarctica',
-    'History &amp; Purpose', 'Ellsworth King of Arms', 'The Armorial',
-    'Heraldry Guides', 'Heraldic Glossary', 'Sources &amp; Credits',
-    'National Website', 'Encyclopedia Westarctica', 'Artwork Attribution &amp; Sources']) {
-    assert.ok(html.includes(text), text);
+test('NIC uses the revised three-column College footer and links', () => {
+  const footer = html.slice(html.indexOf('<footer class="site-footer">'));
+  assert.match(footer, /<footer class="site-footer">/);
+  assert.equal((footer.match(/class="footer-column"/g) ?? []).length, 2);
+  for (const text of [
+    'The College', 'Ellsworth King of Arms', 'WestarcticaNIC',
+    'Westarctica', 'National Website', 'Encyclopedia Westarctica',
+    'Artwork Attribution &amp; Sources', 'A service of the Westarctican College of Arms'
+  ]) {
+    assert.ok(footer.includes(text), text);
   }
-  for (const route of ['/college/', '/ellsworth/', '/armorial/', '/heraldry/',
-    '/heraldry/glossary/', '/sources/']) {
-    assert.ok(html.includes('href="https://ellsworth.westarctica.net' + route + '"'), route);
+  assert.ok(!footer.includes('Armorial &amp; Reference'), 'old reference column must not remain');
+  assert.ok(!footer.includes('History &amp; Purpose'), 'old college link must not remain');
+  for (const [text, href] of [
+    ['Ellsworth King of Arms', 'https://ellsworth.westarctica.net/ellsworth/'],
+    ['WestarcticaNIC', 'https://nic.westarctica.net'],
+    ['National Website', 'https://www.westarctica.info/'],
+    ['Encyclopedia Westarctica', 'https://www.westarctica.wiki/']
+  ]) {
+    assert.ok(footer.includes('href="' + href + '">' + text + '</a>'), text);
   }
+  assert.match(css, /grid-template-columns:\s*1\.3fr 1fr 1fr/);
+  assert.match(css, /\.footer-identity\s*\{\s*grid-column:\s*1\/-1/);
 });
 
 test('Heraldic badge asset and College design colors exist locally', () => {
