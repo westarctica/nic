@@ -62,3 +62,8 @@ WNIC is a service of the **Westarctican College of Arms**. The static website ad
 The footer and core visual conventions are adapted from the private `westarctica/college-of-arms` repository (main commit `31246942afedd4d001eaf81884e6516a680e9672`), specifically `src/components/Footer.astro`, `src/layouts/SiteLayout.astro`, and `src/styles/global.css`. The shared heraldic badge comes from `public/images/waq-coa-badge.svg`.
 
 College footer links have been made absolute to their respective sites (`https://ellsworth.westarctica.net/` and `https://nic.westarctica.net`), so the NIC does not silently point to routes it does not serve. The service colophon identifies the local website as `nic.westarctica.net`. The revised College footer has two link columns alongside the College identity.
+
+
+### Masthead artwork
+
+The NIC masthead uses the full `waq-coa-arms.svg` heraldic achievement from the College of Arms source repository, matching the College's masthead treatment. The small square `waq-coa-badge.svg` remains in use for the favicon, footer service identity, and institutional panel. Both assets are stored locally so the NIC does not rely on the College website for rendering.

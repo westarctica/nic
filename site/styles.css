@@ -34,7 +34,7 @@ button { color: var(--ink); }
 .masthead { text-align: center; color: var(--ink); }
 .national-line { font: 600 .68rem/1.4 var(--sans); text-transform: uppercase; letter-spacing: .23em; padding: 1.25rem 1rem .8rem; }
 .college-brand { display: inline-flex; align-items: center; gap: 1.35rem; text-align: left; color: var(--ink); text-decoration: none; padding: 0 1.5rem 1.4rem; }
-.college-brand img { width: 90px; height: 90px; object-fit: contain; }
+.college-brand img { width: 90px; height: 106px; object-fit: contain; }
 .college-brand > span { display: grid; gap: .25rem; }
 .brand-place { font: 400 1.1rem var(--serif); letter-spacing: .12em; text-transform: uppercase; }
 .brand-name { font: 400 clamp(1.85rem,3vw,2.6rem)/1.1 var(--serif); letter-spacing: -.025em; }
@@ -121,7 +121,7 @@ main { max-width: var(--page); margin: auto; padding: 0 2rem 5rem; min-height: 3
   main { padding: 0 1.25rem 3rem; }
   .national-line { font-size: .58rem; letter-spacing: .16em; padding: 1rem 1rem .6rem; }
   .college-brand { gap: 1rem; padding: .25rem 1rem 1.1rem; }
-  .college-brand img { width: 67px; height: 67px; }
+  .college-brand img { width: 67px; height: 80px; }
   .brand-place { font-size: .85rem; }
   .brand-name { font-size: 1.85rem; }
   .brand-service { font-size: .65rem; }
@@ -149,7 +149,7 @@ main { max-width: var(--page); margin: auto; padding: 0 2rem 5rem; min-height: 3
   .brand-name { font-size: 1.65rem; }
   .college-brand { gap: .7rem; }
   .brand-place { font-size: .75rem; }
-  .college-brand img { width: 58px; height: 58px; }
+  .college-brand img { width: 58px; height: 70px; }
   .introduction-text h1 { font-size: 2.25rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .footer-identity { grid-column: 1/-1; }
