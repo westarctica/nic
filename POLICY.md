@@ -7,7 +7,8 @@ WNIC proposes to assign names below `westarctica.net` to approved people, instit
 
 ## Names
 - Reserved operational names such as `nic`, `ca`, and `www` cannot be claimed through ordinary applications.
-- Institutional identifiers such as `ellsworth` belong to the institution or office, not the current officeholder. The public GitHub username is an operational custodian, not proof of personal ownership.
+- Institutional identifiers such as `ellsworth` belong to the institution or office, not the current officeholder. `data/institutions.json` is the explicit assignment ledger; an administrative custodian can change without transferring the assignment. A GitHub username is not proof of personal ownership.
+- `ellsworth.westarctica.net` is the first institutional allocation (Office of the Ellsworth King of Arms); it is pending DNS/website configuration.
 - Names may be refused or reassigned for impersonation, abuse, confusion, conflict, or operational necessity, following a documented decision.
 - Nested names require control of the parent registration and may not be created beneath a delegated NS zone.
 

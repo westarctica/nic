@@ -21,7 +21,9 @@ form.addEventListener('submit', (event) => {
     result.textContent = 'The development ledger is not currently available. No availability statement can be made.';
     return;
   }
-  if (ledger.reserved.includes(name)) {
+  if (ledger.institutional?.includes(name)) {
+    result.textContent = name + '.westarctica.net is allocated to an institution in the WNIC ledger. DNS and website activation may still be pending.';
+  } else if (ledger.reserved.includes(name)) {
     result.textContent = name + '.westarctica.net is reserved for institutional or infrastructure use.';
   } else if (ledger.registered.includes(name)) {
     result.textContent = name + '.westarctica.net is assigned in the development ledger.';

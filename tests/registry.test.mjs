@@ -9,6 +9,10 @@ test('empty bootstrap ledger is valid', () => {
   assert.deepEqual(result.errors, []);
   assert.ok(result.reserved.includes('nic'));
   assert.ok(result.reserved.includes('ellsworth'));
+  assert.equal(result.institutions.get('ellsworth')?.holder, 'Office of the Ellsworth King of Arms');
+  assert.equal(result.institutions.get('ellsworth')?.custodian, 'westarctica');
+  assert.equal(result.institutions.get('ellsworth')?.status, 'assigned');
+  assert.equal(result.institutions.get('ellsworth')?.dns, 'pending');
 });
 
 test('ordinary CNAME registration is valid', () => {

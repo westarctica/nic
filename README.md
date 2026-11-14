@@ -9,6 +9,7 @@ The **Westarctica Network Information Center** is an emerging registry for names
 This project follows the *architecture* of [is-a.dev/register](https://github.com/is-a-dev/register): a public, reviewable JSON ledger; automated checks; and, later, publication into Cloudflare DNS. This is a small independent implementation, not a copy of is-a.dev's registrations.
 
 - A request is a file such as `domains/smith.json`.
+- Institutional allocations live in `data/institutions.json` and are protected in `data/reserved.json`. Their existence does not create a DNS record.
 - GitHub pull requests provide review, ownership history, and an audit trail.
 - The first release supports `A`, `AAAA`, `CNAME`, `CAA`, `MX`, `TXT`, `NS`, and `DS` records.
 - Delegation via `NS` is a first-class registration option.
@@ -20,6 +21,7 @@ This project follows the *architecture* of [is-a.dev/register](https://github.co
 | Location | Purpose |
 | --- | --- |
 | `domains/` | Approved registrations (one JSON file per name) |
+| `data/institutions.json` | Office-held assignments independent of the incumbent |
 | `data/reserved.json` | Protected names |
 | `scripts/registry.mjs` | Registration and delegation validation |
 | `scripts/dns-manifest.mjs` | Dry-run, provider-independent DNS manifest |
@@ -46,7 +48,7 @@ Although GitHub repository secrets include `CLOUDFLARE_API_TOKEN` and the `CLOUD
 
 ## Institutional continuity
 
-Registrants receive a revocable use assignment beneath `westarctica.net`, not ownership of the parent domain. Institutional names must remain with their office or institution when a custodian changes. This is particularly important for `ellsworth.westarctica.net`.
+Registrants receive a revocable use assignment beneath `westarctica.net`, not ownership of the parent domain. Institutional names must remain with their office or institution when a custodian changes. The first assignment is `ellsworth.westarctica.net`, held by the **Office of the Ellsworth King of Arms**, with `westarctica` currently named as administrative custodian. Its DNS and website are **not yet configured**.
 
 ## Acknowledgment
 
