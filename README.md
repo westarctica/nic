@@ -53,3 +53,12 @@ Registrants receive a revocable use assignment beneath `westarctica.net`, not ow
 ## Acknowledgment
 
 The concept and JSON-ledger approach were informed by [is-a.dev/register](https://github.com/is-a-dev/register) (MIT-licensed). This initial scaffold is separately implemented for Westarctica.
+
+
+## College of Arms affiliation and visual identity
+
+WNIC is a service of the **Westarctican College of Arms**. The static website adopts the College's colors, Georgia-based typography, centered national masthead, gold rules, heraldic badge, and the same four-column footer structure and footer link labels.
+
+The footer and core visual conventions are adapted from the private \`westarctica/college-of-arms\` repository (main commit \`fb9a5510fb557d18f76b9b66e144253f1b2f51ef\`), specifically \`src/components/Footer.astro\`, \`src/layouts/SiteLayout.astro\`, and \`src/styles/global.css\`. The shared heraldic badge comes from \`public/images/waq-coa-badge.svg\`.
+
+Links in the College's original footer have been made absolute to \`https://ellsworth.westarctica.net/\` so that the NIC does not silently point to routes it does not serve. Only the colophon identifies the local service as \`nic.westarctica.net\`.

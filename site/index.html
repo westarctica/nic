@@ -1,67 +1,127 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Westarctica Network Information Center: a developing shared namespace for Westarctican institutions and individuals.">
-  <meta name="theme-color" content="#10263f">
-  <title>Westarctica Network Information Center</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Westarctica Network Information Center — a service of the Westarctican College of Arms, establishing a shared digital namespace for Westarctican offices, institutions, and individuals." />
+  <meta name="theme-color" content="#102c46" />
+  <meta property="og:title" content="Westarctica Network Information Center" />
+  <meta property="og:description" content="A shared digital namespace for Westarctica, operated as a service of the Westarctican College of Arms." />
+  <meta property="og:type" content="website" />
+  <title>Westarctica Network Information Center | Westarctican College of Arms</title>
+  <link rel="icon" type="image/svg+xml" href="/images/waq-coa-badge.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
 </head>
 <body>
-  <div class="topline"><span>WESTARCTICA NETWORK INFORMATION CENTER</span><span>ESTABLISHING THE NAMESPACE</span></div>
-  <header class="site-header shell">
-    <a class="mark" href="./" aria-label="WNIC home"><span class="monogram" aria-hidden="true">W</span><span>WNIC <small>Network Information Center</small></span></a>
-    <nav aria-label="Primary">
-      <a href="#names">Names</a>
-      <a href="#process">How it works</a>
-      <a href="https://github.com/westarctica/nic">GitHub</a>
+  <a class="skip-link" href="#main">Skip to Content</a>
+  <header class="masthead">
+    <div class="national-line">The Grand Duchy of Westarctica</div>
+    <a class="college-brand" href="/" aria-label="Westarctica Network Information Center — Home">
+      <img src="/images/waq-coa-badge.svg" alt="" width="90" height="90" />
+      <span><span class="brand-place">Westarctican</span><span class="brand-name">Network Information Center</span><span class="brand-service">A service of the Westarctican College of Arms</span></span>
+    </a>
+    <nav class="desktop-navigation" aria-label="Main Navigation">
+      <a href="#names">Domain Names</a>
+      <a href="#principles">The Registry</a>
+      <a href="#institutions">Institutions</a>
+      <a href="https://ellsworth.westarctica.net/">College of Arms</a>
     </nav>
+    <details class="mobile-navigation">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile Navigation">
+        <a href="#names">Domain Names</a>
+        <a href="#principles">The Registry</a>
+        <a href="#institutions">Institutions</a>
+        <a href="https://ellsworth.westarctica.net/">College of Arms</a>
+      </nav>
+    </details>
   </header>
-  <main>
-    <section class="hero shell" aria-labelledby="page-title">
-      <p class="eyebrow">The Westarctican digital namespace</p>
-      <h1 id="page-title">A home for every<br><em>Westarctican institution.</em></h1>
-      <p class="lede">A shared, enduring namespace for the offices, organizations, and people of Westarctica. Built around open records, independent DNS administration, and continuity from one officeholder to the next.</p>
-      <div class="launch"><span class="light" aria-hidden="true"></span><div><strong>Registry in preparation</strong><p>Public registrations are not yet open. This preview explains the intended service.</p></div></div>
+
+  <main id="main">
+    <section class="college-introduction" aria-labelledby="welcome-title">
+      <div class="introduction-text">
+        <p class="eyebrow">Westarctica Network Information Center</p>
+        <h1 id="welcome-title">A common name for the<br class="wide-break" /> Westarctican network</h1>
+        <p>The Network Information Center maintains a shared domain namespace for Westarctican institutions, offices, and individuals. As a service of the Westarctican College of Arms, it emphasizes enduring institutional identities and a publicly reviewable record.</p>
+        <p class="service-note"><strong>Registry in preparation.</strong> Public registrations are not yet open. The registry ledger is being established and does not yet publish DNS changes.</p>
+        <a class="ink-link" href="https://github.com/westarctica/nic">View the Public Registry Repository <span aria-hidden="true">→</span></a>
+      </div>
+      <aside class="register-index" aria-labelledby="explore-title">
+        <h2 id="explore-title">Consult the NIC</h2>
+        <a href="#names"><span>Explore a Domain Name<small>Check the development registration ledger</small></span><span aria-hidden="true">→</span></a>
+        <a href="#principles"><span>How the Registry Works<small>Public records, review, and independent DNS</small></span><span aria-hidden="true">→</span></a>
+        <a href="#institutions"><span>Institutional Names<small>Official addresses held by offices, not incumbents</small></span><span aria-hidden="true">→</span></a>
+      </aside>
     </section>
-    <section class="lookup" id="names" aria-labelledby="lookup-title">
-      <div class="shell lookup-grid">
-        <div><p class="eyebrow eyebrow-light">A place to begin</p><h2 id="lookup-title">Explore a name.</h2><p>Check whether a proposed name appears in the current development ledger. This is not a live DNS lookup or an offer of registration.</p></div>
-        <div class="lookup-tool">
-          <form id="lookup-form">
-            <label for="requested-name">Proposed hostname</label>
-            <div class="input-row"><input id="requested-name" name="name" type="text" spellcheck="false" autocomplete="off" pattern="[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?" maxlength="63" placeholder="yourname" aria-describedby="lookup-hint" required><span>.westarctica.net</span></div>
-            <button type="submit">Check development ledger</button>
-          </form>
-          <p class="hint" id="lookup-hint">Use lowercase letters, digits, or hyphens; no leading or trailing hyphen.</p>
-          <p class="result" id="lookup-result" role="status" aria-live="polite">No name has been checked yet.</p>
+
+    <section class="lookup-section" id="names" aria-labelledby="lookup-title">
+      <div class="section-heading"><div><h2 id="lookup-title">Explore a Domain Name</h2><p>Look up a name in the NIC's development ledger</p></div><span class="prelaunch-mark">Registration not yet open</span></div>
+      <div class="lookup-grid">
+        <form class="lookup-form" id="lookup-form">
+          <label for="requested-name">Proposed hostname</label>
+          <div class="input-row">
+            <input id="requested-name" name="name" type="text" spellcheck="false" autocomplete="off" pattern="[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?" maxlength="63" placeholder="yourname" aria-describedby="lookup-hint" required />
+            <span>.westarctica.net</span>
+          </div>
+          <button type="submit" class="button">Check Development Ledger</button>
+          <p class="lookup-hint" id="lookup-hint">Use lowercase letters, numbers, or hyphens. This checks our development ledger only.</p>
+          <p class="lookup-result" id="lookup-result" role="status" aria-live="polite">No name has been checked yet.</p>
+        </form>
+        <div class="lookup-explanation">
+          <h3>A namespace, not a new TLD</h3>
+          <p>WNIC allocates subdomains beneath <strong>westarctica.net</strong>. These are not ICANN-accredited registrations or ownership interests in the parent domain. We will publish eligibility requirements and registration procedures before opening the service.</p>
+          <a class="ink-link" href="https://github.com/westarctica/nic/blob/main/POLICY.md">Registration Policy — Draft <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
-    <section class="shell feature-section" id="process" aria-labelledby="feature-title">
-      <p class="eyebrow">The model</p>
-      <h2 id="feature-title">Small by design.<br>Built to last.</h2>
-      <div class="features">
-        <article><span class="feature-number">01</span><h3>Transparent registration</h3><p>Every approved assignment will have a reviewable JSON record and change history, managed through GitHub.</p></article>
-        <article><span class="feature-number">02</span><h3>Independent operation</h3><p>Registrants may delegate their names to independent DNS providers, rather than depending on WNIC to host every record.</p></article>
-        <article><span class="feature-number">03</span><h3>Institutional continuity</h3><p>Names identifying an office remain with the office. Administrative custody can change without breaking the institutional address.</p></article>
+
+    <section class="principles" id="principles" aria-labelledby="principles-title">
+      <div class="section-heading"><div><h2 id="principles-title">The Registry</h2><p>Designed to begin simply, and to endure</p></div></div>
+      <div class="principle-grid">
+        <article><span class="principle-number">I</span><h3>Public records</h3><p>Approved assignments will be recorded in a public, versioned registry, with changes reviewed through GitHub.</p></article>
+        <article><span class="principle-number">II</span><h3>Independent operation</h3><p>Registrants may delegate DNS administration to their own provider, while the NIC preserves the underlying assignment.</p></article>
+        <article><span class="principle-number">III</span><h3>Continuity of office</h3><p>Addresses assigned to institutions follow their offices through changes of leadership and administration.</p></article>
       </div>
     </section>
-    <section class="shell institutions" aria-labelledby="institutions-title">
-      <div><p class="eyebrow">Founding reservations</p><h2 id="institutions-title">Two addresses. Two purposes.</h2></div>
-      <div class="addresses">
-        <div><code>nic.westarctica.net</code><p>The registry's public information and administration site.</p></div>
-        <div><code>ellsworth.westarctica.net</code><p>The future institutional home of the Ellsworth King of Arms.</p></div>
+
+    <section class="institution-panel" id="institutions" aria-labelledby="institution-title">
+      <div class="institution-heading"><img src="/images/waq-coa-badge.svg" alt="" width="84" height="84" loading="lazy" /><div><p class="eyebrow">Institutional assignments</p><h2 id="institution-title">Offices and institutions</h2></div></div>
+      <div class="institution-records">
+        <div><code>ellsworth.westarctica.net</code><p>Office of the Ellsworth King of Arms · Assignment recorded; website and DNS activation pending.</p></div>
+        <div><code>nic.westarctica.net</code><p>Westarctica Network Information Center · Registry headquarters and information service.</p></div>
       </div>
-    </section>
-    <section class="shell questions" aria-labelledby="questions-title">
-      <p class="eyebrow">Practical questions</p><h2 id="questions-title">A namespace, not a new TLD.</h2>
-      <p>WNIC will allocate subdomains beneath <strong>westarctica.net</strong>. These are not ICANN-accredited domain registrations, and they do not convey ownership of the parent domain. Public registration policies, eligibility, and a technical publication process must be approved before applications open.</p>
-      <p><a class="text-link" href="https://github.com/westarctica/nic/blob/main/POLICY.md">Read the draft policy</a> <a class="text-link" href="https://github.com/westarctica/nic">View the public repository</a></p>
     </section>
   </main>
-  <footer><div class="shell"><span>WNIC · Westarctica Network Information Center</span><span>Public preview · No registrations currently accepted</span></div></footer>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-identity">
+        <a href="https://ellsworth.westarctica.net/">Westarctican<br />College of Arms</a>
+        <p>Creating and recording the<br />armorial heritage of Westarctica</p>
+      </div>
+      <div class="footer-column"><h2>The College</h2>
+        <a href="https://ellsworth.westarctica.net/college/">History &amp; Purpose</a>
+        <a href="https://ellsworth.westarctica.net/ellsworth/">Ellsworth King of Arms</a>
+      </div>
+      <div class="footer-column"><h2>Armorial &amp; Reference</h2>
+        <a href="https://ellsworth.westarctica.net/armorial/">The Armorial</a>
+        <a href="https://ellsworth.westarctica.net/heraldry/">Heraldry Guides</a>
+        <a href="https://ellsworth.westarctica.net/heraldry/glossary/">Heraldic Glossary</a>
+        <a href="https://ellsworth.westarctica.net/sources/">Sources &amp; Credits</a>
+      </div>
+      <div class="footer-column"><h2>Westarctica</h2>
+        <a href="https://www.westarctica.info/">National Website</a>
+        <a href="https://www.westarctica.wiki/">Encyclopedia Westarctica</a>
+      </div>
+    </div>
+    <div class="footer-colophon">
+      <a class="college-service-identity" href="/" aria-label="NIC — a service of the Westarctican College of Arms">
+        <img src="/images/waq-coa-badge.svg" width="56" height="56" alt="" loading="lazy" />
+        <span><strong>nic.westarctica.net</strong><span>A service of the Westarctican College of Arms</span></span>
+      </a>
+      <a href="https://ellsworth.westarctica.net/sources/">Artwork Attribution &amp; Sources</a>
+    </div>
+  </footer>
 </body>
 </html>
