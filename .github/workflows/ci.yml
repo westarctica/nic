@@ -1,0 +1,27 @@
+name: Registry checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify registrations and protections
+        run: npm test
+      - name: Validate registry ledger
+        run: npm run validate
+      - name: Generate read-only DNS manifest
+        run: npm run preview:dns
+      - name: Build static NIC site
+        run: npm run build:site
