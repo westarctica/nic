@@ -29,7 +29,7 @@ async function diagnose(label, path) {
     apiSuccess: payload.success === true,
     errors
   };
-  if (label === 'User token verification' && payload.result) {
+  if ((label === 'User token verification' || label === 'Account token verification') && payload.result) {
     summary.tokenStatus = payload.result.status ?? 'unknown';
   }
   if (label === 'Target zone discovery' && Array.isArray(payload.result)) {
@@ -44,7 +44,10 @@ async function diagnose(label, path) {
 }
 
 const results = [];
+console.log(JSON.stringify({ tokenFormat: token.startsWith('cfat_') ? 'account-owned (cfat_)' :
+  token.startsWith('cfut_') ? 'user-owned (cfut_)' : 'legacy or other' }));
 results.push(await diagnose('User token verification', '/user/tokens/verify'));
+results.push(await diagnose('Account token verification', '/accounts/' + accountId + '/tokens/verify'));
 results.push(await diagnose('Target zone discovery',
   '/zones?' + new URLSearchParams({ name: 'westarctica.net', 'account.id': accountId, per_page: '20' })));
 results.push(await diagnose('Account redirect rulesets',
@@ -55,5 +58,5 @@ if (!results.every(Boolean)) {
   console.error('One or more read-only Cloudflare authorization checks failed. No write attempted.');
   process.exitCode = 1;
 } else {
-  console.log('All four read-only authorization checks passed. No write attempted.');
+  console.log('All five read-only authorization checks passed. No write attempted.');
 }
