@@ -23,5 +23,9 @@ jobs:
         run: npm run validate
       - name: Generate read-only DNS manifest
         run: npm run preview:dns
+      - name: Check forwarding publisher syntax and compile Cloudflare redirect plan (offline)
+        run: |
+          node --check scripts/publish-forwarding.mjs
+          npm run preview:forwarding
       - name: Build static NIC site
         run: npm run build:site
