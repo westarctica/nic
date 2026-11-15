@@ -1,7 +1,7 @@
 {
   "krigsvold": {
     "type": "CNAME",
-    "content": "krigsvold.org",
+    "content": "www.krigsvold.org",
     "proxied": false
   }
 }
