@@ -47,7 +47,7 @@ export function matchesRedirectItem(existing, desired) {
     (actual?.status_code ?? 301) === wanted?.status_code &&
     (actual?.include_subdomains ?? false) === wanted?.include_subdomains &&
     (actual?.subpath_matching ?? false) === wanted?.subpath_matching &&
-    (actual?.preserve_path_suffix ?? true) === wanted?.preserve_path_suffix &&
+    (actual?.preserve_path_suffix ?? false) === wanted?.preserve_path_suffix &&
     (actual?.preserve_query_string ?? false) === wanted?.preserve_query_string;
 }
 
