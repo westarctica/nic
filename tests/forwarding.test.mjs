@@ -14,7 +14,7 @@ test('one first-class forwarding entry compiles to proxied DNS and Bulk Redirect
   assert.equal(redirectListName, 'wnic_forwarding');
   assert.equal(krigsvold.hostname, 'krigsvold.westarctica.net');
   assert.deepEqual(krigsvold.dns, {
-    type: 'A', name: 'krigsvold.westarctica.net', content: '192.0.2.0',
+    type: 'A', name: 'krigsvold.westarctica.net', content: '192.0.2.1',
     proxied: true, ttl: 1, comment: 'WNIC forwarding endpoint: krigsvold'
   });
   assert.deepEqual(krigsvold.bulk.redirect, {
