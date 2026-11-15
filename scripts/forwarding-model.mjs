@@ -2,7 +2,7 @@ import { zoneName } from './registry.mjs';
 
 export const redirectListName = 'wnic_forwarding';
 export const redirectListDescription = 'WNIC-managed redirects for westarctica.net; source: westarctica/nic';
-export const placeholderAddress = '192.0.2.0';
+export const placeholderAddress = '192.0.2.1';
 
 export function redirectsFromRegistry(entries) {
   return [...entries]
@@ -39,7 +39,6 @@ export function redirectsFromRegistry(entries) {
     });
 }
 
-const normalized = (x) => JSON.stringify(x);
 export function matchesRedirectItem(existing, desired) {
   const actual = existing?.redirect;
   const wanted = desired?.redirect;
