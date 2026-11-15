@@ -4,10 +4,12 @@ import { validateRegistration, loadRegistry } from '../scripts/registry.mjs';
 
 const entry = (records) => ({ owner: { username: 'example-user' }, records });
 
-test('empty bootstrap ledger is valid', () => {
+test('registration and institutional ledgers are valid', () => {
   const result = loadRegistry();
   assert.deepEqual(result.errors, []);
   assert.ok(result.reserved.includes('nic'));
+  assert.deepEqual(result.entries.get('krigsvold')?.records, { CNAME: 'krigsvold.org' });
+  assert.equal(result.entries.get('krigsvold')?.owner.username, 'howardjp');
   assert.ok(result.reserved.includes('ellsworth'));
   assert.equal(result.institutions.get('ellsworth')?.holder, 'Office of the Ellsworth King of Arms');
   assert.equal(result.institutions.get('ellsworth')?.custodian, 'westarctica');

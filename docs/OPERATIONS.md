@@ -4,7 +4,7 @@
 
 - `westarctica.net` is registered, and Cloudflare hosts its DNS.
 - The repository has a `CLOUDFLARE_API_TOKEN` **secret** and `CLOUDFLARE_ACCOUNT_ID` **variable**, as supplied by the administrator.
-- **No GitHub workflow uses those values.** This repository does not currently create, alter, or delete Cloudflare records.
+- Only the narrowly scoped Krigsvold pilot workflow consumes the Cloudflare credentials, creating `krigsvold.westarctica.net` as an unproxied CNAME to `krigsvold.org` if absent. It cannot update, delete, or synchronize any other record.
 - `nic.westarctica.net` is the intended public service; `ellsworth.westarctica.net` is separately reserved for the office of the Ellsworth King of Arms.
 
 ## Stage 1: publishing the website
@@ -32,7 +32,7 @@ Before accepting requests:
 4. Document identity/custodianship proof for institutional applicants.
 5. Announce registration availability on the website and publish request instructions.
 
-## Stage 3: enabling DNS changes (NOT YET IMPLEMENTED)
+## Stage 3: general DNS publication (NOT YET IMPLEMENTED)
 
 **Never run a wholesale zone-reconciliation push against an uninventoried zone.**
 1. Export or inventory all current Cloudflare records, including DNSSEC, email, website, verification, and special-purpose records.
@@ -48,3 +48,12 @@ The read-only `npm run preview:dns` command exports desired registrations but do
 ## Trust and privacy
 
 The public repository is an audit ledger, not a confidential enrollment database. No private addresses, identification documents, or credentials belong in JSON registrations or pull requests. A future eligibility-verification process should store sensitive evidence outside the public repository.
+
+## Krigsvold first-registration pilot
+
+- File: `domains/krigsvold.json`; custodian `howardjp`.
+- Desired record: `krigsvold.westarctica.net` CNAME `krigsvold.org`, `proxied: false`.
+- `publish-krigsvold.yml` runs on approved changes to main; it validates the full registry and dry-runs before contacting Cloudflare.
+- It requires Zone Read and DNS Write token permissions in the account identified by `CLOUDFLARE_ACCOUNT_ID`.
+- Existing matching records are left unchanged; conflicts cause failure. No other record can be updated or deleted.
+- Destination web routing and HTTPS are separate future work.
