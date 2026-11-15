@@ -23,6 +23,7 @@
     </a>
     <nav class="desktop-navigation" aria-label="Main Navigation">
       <a href="#names">Domain Names</a>
+      <a href="#apply">Registration Guide</a>
       <a href="#principles">The Registry</a>
       <a href="#institutions">Institutions</a>
       <a href="https://ellsworth.westarctica.net/">College of Arms</a>
@@ -31,7 +32,8 @@
       <summary>Menu</summary>
       <nav aria-label="Mobile Navigation">
         <a href="#names">Domain Names</a>
-        <a href="#principles">The Registry</a>
+        <a href="#apply">Registration Guide</a>
+      <a href="#principles">The Registry</a>
         <a href="#institutions">Institutions</a>
         <a href="https://ellsworth.westarctica.net/">College of Arms</a>
       </nav>
@@ -44,12 +46,13 @@
         <p class="eyebrow">Westarctica Network Information Center</p>
         <h1 id="welcome-title">A common name for the<br class="wide-break" /> Westarctican network</h1>
         <p>The Network Information Center maintains a shared domain namespace for Westarctican institutions, offices, and individuals. As a service of the Westarctican College of Arms, it emphasizes enduring institutional identities and a publicly reviewable record.</p>
-        <p class="service-note"><strong>Registry in preparation.</strong> Public registrations are not yet open. WNIC is piloting HTTPS forwarding for its first ordinary registration while general DNS management remains under development.</p>
+        <p class="service-note"><strong>Registry in preparation.</strong> Public registrations are not yet open. HTTPS website forwarding is operational in a limited pilot. The instructions below explain how to prepare a request; general DNS publication and email forwarding are not yet available.</p>
         <a class="ink-link" href="https://github.com/westarctica/nic">View the Public Registry Repository <span aria-hidden="true">→</span></a>
       </div>
       <aside class="register-index" aria-labelledby="explore-title">
         <h2 id="explore-title">Consult the NIC</h2>
         <a href="#names"><span>Explore a Domain Name<small>Check the development registration ledger</small></span><span aria-hidden="true">→</span></a>
+        <a href="#apply"><span>Prepare a Registration Request<small>Choose a service and follow the application guide</small></span><span aria-hidden="true">→</span></a>
         <a href="#principles"><span>How the Registry Works<small>Public records, review, and independent DNS</small></span><span aria-hidden="true">→</span></a>
         <a href="#institutions"><span>Institutional Names<small>Official addresses held by offices, not incumbents</small></span><span aria-hidden="true">→</span></a>
       </aside>
@@ -76,11 +79,50 @@
       </div>
     </section>
 
+
+    <section class="registration-guide" id="apply" aria-labelledby="apply-title">
+      <div class="section-heading"><div><h2 id="apply-title">Registration Guide</h2><p>Prepare a request for a name beneath westarctica.net</p></div><span class="prelaunch-mark">Public applications not yet open</span></div>
+      <p>WNIC is testing a manually reviewed website-forwarding service. You can prepare your registration using this guide, but please wait for the opening announcement before submitting a public application. The <a href="https://github.com/westarctica/nic/blob/main/POLICY.md">draft registration policy</a> remains under review.</p>
+      <h3>Choose the service you need</h3>
+      <div class="service-options">
+        <article><h4>Website forwarding</h4><p><strong>Operational pilot.</strong> Give an existing website a Westarctican address. Visitors are redirected to your existing URL, which becomes the address shown in their browser. You keep your current hosting provider.</p><p>Example: <a href="https://krigsvold.westarctica.net">krigsvold.westarctica.net</a> forwards to krigsvold.org.</p></article>
+        <article><h4>DNS records or delegation</h4><p><strong>Publication under development.</strong> For a website that stays at the Westarctican address, your host must accept that custom hostname and provide HTTPS. A CNAME alone does not do this. NS delegation lets your DNS provider administer an assigned subdomain.</p><p>The registry can validate DNS requests, but general automated DNS publication has not opened.</p></article>
+        <article><h4>Email forwarding</h4><p><strong>Not yet available.</strong> An address such as yourname@westarctica.net would forward incoming mail to a verified mailbox. A domain-name request does not create an email address.</p><p>Do not submit your private destination email address in GitHub.</p></article>
+      </div>
+      <h3>Prepare a website-forwarding request</h3>
+      <ol class="application-steps">
+        <li><strong>Choose a name.</strong> Use the <a href="#names">ledger checker above</a>. Enter only the part before <code>.westarctica.net</code>: 1–63 lowercase letters, digits, or single hyphens, beginning and ending with a letter or digit. Consecutive hyphens are not accepted. A name absent from the ledger is not reserved for you or guaranteed to be approved.</li>
+        <li><strong>Choose your destination.</strong> Supply the full public HTTPS URL of a website you control or are authorized to represent. Forwarding changes the browser address; it does not host a copy of the destination site.</li>
+        <li><strong>Prepare your registration file.</strong> Using a GitHub account, fork the <a href="https://github.com/westarctica/nic">public registry repository</a>. Add <code>domains/yourname.json</code>, replacing <code>yourname</code> in the filename with your chosen name. Copy the example below, then replace the GitHub username and destination URL.</li>
+        <li><strong>Check and submit when applications open.</strong> Review the registration policy, then open a pull request from your fork to <code>westarctica/nic</code>. Explain whom the name represents and confirm your authority to use the destination. Automated checks validate the file; a maintainer reviews the request. A passing check is not approval.</li>
+        <li><strong>Wait for publication.</strong> An approved request is merged into the ledger and the forwarding publisher runs separately. A merged entry is not proof of activation: wait for successful publication, then test your new address over HTTPS.</li>
+      </ol>
+      <div class="registration-example">
+        <p class="eyebrow">Example · domains/yourname.json</p>
+        <pre><code>{
+  "owner": { "username": "YOUR-GITHUB-USERNAME" },
+  "service": {
+    "type": "redirect",
+    "target": "https://example.org",
+    "status": 301,
+    "preservePath": true,
+    "preserveQuery": true
+  }
+}</code></pre>
+        <p>This requests a permanent (301) redirect. With both preservation options enabled, <code>yourname.westarctica.net/news?year=2026</code> forwards to <code>example.org/news?year=2026</code>. Use <code>false</code> for either option if you do not want that behavior. Permanent redirects may be cached by browsers.</p>
+      </div>
+      <h3>Review, privacy, and later changes</h3>
+      <p>Registration files, pull requests, and their history are public. Include only the information needed for the request. Never publish passwords, API tokens, identity documents, private email addresses, or other confidential evidence.</p>
+      <p>Names associated with Westarctica are subject to review for eligibility, reserved institutional use, confusion, impersonation, and abuse. Institutional names remain with the office or institution when its administrator changes. Assignments are subdomains, not ownership of the parent domain or ICANN-accredited registrations.</p>
+      <p>For a destination change, transfer, or withdrawal during the pilot, open an <a href="https://github.com/westarctica/nic/issues/new">issue in the registry repository</a> describing the requested change without private information. A maintainer must review and arrange publication; editing or deleting a JSON file alone does not update or remove the live service.</p>
+      <a class="ink-link" href="https://github.com/westarctica/nic/blob/main/CONTRIBUTING.md">Full GitHub Instructions <span aria-hidden="true">→</span></a>
+    </section>
+
     <section class="principles" id="principles" aria-labelledby="principles-title">
       <div class="section-heading"><div><h2 id="principles-title">The Registry</h2><p>Designed to begin simply, and to endure</p></div></div>
       <div class="principle-grid">
         <article><span class="principle-number">I</span><h3>Public records</h3><p>Approved assignments will be recorded in a public, versioned registry, with changes reviewed through GitHub.</p></article>
-        <article><span class="principle-number">II</span><h3>Independent operation</h3><p>Registrants may delegate DNS administration to their own provider, while the NIC preserves the underlying assignment.</p></article>
+        <article><span class="principle-number">II</span><h3>Independent operation</h3><p>The registry supports requests for delegation to an independent DNS provider. General DNS publication remains under development.</p></article>
         <article><span class="principle-number">III</span><h3>Continuity of office</h3><p>Addresses assigned to institutions follow their offices through changes of leadership and administration.</p></article>
       </div>
     </section>
