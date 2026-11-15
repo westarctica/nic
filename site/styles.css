@@ -156,3 +156,20 @@ main { max-width: var(--page); margin: auto; padding: 0 2rem 5rem; min-height: 3
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print { .masthead, .site-footer, .skip-link, .lookup-form { display: none !important; } main { max-width: none; } body { border: 0; color: #000; } }
+
+/* Registration guide follows the existing College typography and rules. */
+.registration-guide { border-top: 1px solid var(--ink); padding: 2.5rem 0 3rem; }
+.registration-guide h3 { margin: 2rem 0 1rem; }
+.registration-guide p, .application-steps { font-size: .92rem; }
+.service-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.service-options article { min-width: 0; border-top: 2px solid var(--gold); padding-top: 1rem; }
+.service-options h4 { font: 400 1.3rem/1.3 var(--serif); color: var(--ink); margin: 0 0 .8rem; }
+.service-options p { font-size: .86rem; }
+.application-steps { padding-left: 1.5rem; }
+.application-steps li { padding-left: .4rem; margin-bottom: 1.2rem; }
+.registration-guide code { overflow-wrap: anywhere; font-size: .87em; }
+.registration-example { min-width: 0; background: var(--wash); padding: 1.5rem; border-left: 3px solid var(--gold); }
+.registration-example pre { max-width: 100%; overflow-x: auto; margin: 0 0 1.25rem; font-size: .88rem; line-height: 1.6; }
+.registration-example pre code { overflow-wrap: normal; font-size: inherit; }
+.registration-example p:last-child { margin-bottom: 0; }
+@media (max-width: 760px) { .service-options { grid-template-columns: 1fr; gap: 1rem; } .registration-example { padding: 1rem; } }
