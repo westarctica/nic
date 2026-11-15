@@ -2,7 +2,7 @@
 
 The **Westarctica Network Information Center** is an emerging registry for names beneath **westarctica.net**. Its planned public home is **nic.westarctica.net**.
 
-> **Prelaunch:** No public registrations are being accepted yet. DNS is not being published from this repository. The live Cloudflare zone remains authoritative and untouched.
+> **Prelaunch:** Public registrations are not yet being accepted. The first approved pilot registration is `krigsvold.westarctica.net`, with only that exact name eligible for automatic, non-destructive DNS publication.
 
 ## Design
 
@@ -42,9 +42,17 @@ npm run build:site
 
 To register an eventual public domain, see [CONTRIBUTING.md](CONTRIBUTING.md). The examples use documentation-only hostnames; no live DNS assignments are implied.
 
+## First ordinary registration
+
+`domains/krigsvold.json` registers `krigsvold.westarctica.net` as a DNS-only CNAME pointing at `krigsvold.org`, with GitHub custodian `howardjp`.
+
+A restricted pilot publisher validates the registry, refuses to change any pre-existing conflicting records, and creates only this hostname if absent. A matching CNAME is a no-op. Run `node scripts/publish-krigsvold.mjs --dry-run` to see the exact proposed DNS record without contacting Cloudflare.
+
+DNS alone does not configure the origin server or HTTPS for the added hostname; that may follow separately.
+
 ## Safety before Cloudflare publication
 
-Although GitHub repository secrets include `CLOUDFLARE_API_TOKEN` and the `CLOUDFLARE_ACCOUNT_ID` variable, **no workflow consumes them**. DNS publication must wait for a current zone inventory, explicit decisions about which existing records are externally managed, an approved diff, protected branches, and an operational rollback procedure. See [operations](docs/OPERATIONS.md).
+Although GitHub repository secrets include `CLOUDFLARE_API_TOKEN` and the `CLOUDFLARE_ACCOUNT_ID` variable, **only the one-record Krigsvold pilot workflow consumes them**. General DNS publishing still requires a current zone inventory, explicit management boundaries, approval, protected branches, and a rollback plan. See [operations](docs/OPERATIONS.md).
 
 ## Institutional continuity
 
