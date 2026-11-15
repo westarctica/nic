@@ -9,7 +9,8 @@ if (errors.length) {
     hostname: name + '.' + zoneName,
     custodian: entry.owner.username,
     holder: entry.holder ?? null,
-    records: entry.records
+    records: entry.records ?? null,
+    service: entry.service ?? null
   }));
   // This is a proposed-state export only. It does not read or change live DNS.
   console.log(JSON.stringify({ zone: zoneName, mode: 'dry-run-only', registrations, institutionalAssignmentsWithoutDNS: [...institutions.keys()].sort() }, null, 2));

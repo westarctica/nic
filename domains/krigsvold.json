@@ -2,7 +2,11 @@
   "owner": {
     "username": "howardjp"
   },
-  "records": {
-    "CNAME": "krigsvold.org"
+  "service": {
+    "type": "redirect",
+    "target": "https://krigsvold.org",
+    "status": 301,
+    "preservePath": true,
+    "preserveQuery": true
   }
 }
