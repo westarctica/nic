@@ -163,9 +163,14 @@ async function getListItems(listId) {
 if (list) {
   listItems = await getListItems(list.id);
   const wantedSources = new Set(planned.map(i => i.bulk.redirect.source_url));
+  const seenSources = new Set();
   for (const existing of listItems) {
     // The dedicated list is not a general-purpose account list.
     verifyManagedListItem(existing);
+    if (seenSources.has(existing.redirect.source_url)) {
+      throw new Error('Duplicate WNIC redirect source: ' + existing.redirect.source_url);
+    }
+    seenSources.add(existing.redirect.source_url);
     if (!wantedSources.has(existing.redirect.source_url)) {
       throw new Error('Unrecognized/orphan WNIC redirect item: ' + existing.redirect.source_url +
         '; explicit removal review required');
@@ -191,7 +196,12 @@ const changes = [];
 for (const item of planned) {
   const existing = existingBySource.get(item.bulk.redirect.source_url);
   if (!existing) changes.push(item.bulk);
-  else if (!matchesRedirectItem(existing, item.bulk)) changes.push(item.bulk);
+  else if (!matchesRedirectItem(existing, item.bulk)) {
+    // Existing list items require a distinct reviewed update path.
+    // POST is create-only; never silently overwrite an existing mapping.
+    throw new Error('Existing WNIC redirect differs from ledger: ' + item.hostname +
+      '. Update requires a separately reviewed migration.');
+  }
 }
 async function waitForBulkOperation(id) {
   if (!/^[a-f0-9]{32}$/i.test(id ?? '')) throw new Error('Invalid redirect list operation ID');
