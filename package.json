@@ -10,7 +10,8 @@
     "test": "node --test",
     "validate": "node scripts/validate.mjs",
     "preview:dns": "node scripts/dns-manifest.mjs",
-    "build:site": "node scripts/build-site.mjs"
+    "build:site": "node scripts/build-site.mjs",
+    "preview:forwarding": "node scripts/publish-forwarding.mjs --dry-run"
   },
   "devDependencies": {
     "wrangler": "^4.135.0"

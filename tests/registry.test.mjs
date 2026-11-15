@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateRegistration, loadRegistry } from '../scripts/registry.mjs';
+import { validateRegistration, validateForwarding, loadRegistry } from '../scripts/registry.mjs';
 
 const entry = (records) => ({ owner: { username: 'example-user' }, records });
 
@@ -8,7 +8,9 @@ test('registration and institutional ledgers are valid', () => {
   const result = loadRegistry();
   assert.deepEqual(result.errors, []);
   assert.ok(result.reserved.includes('nic'));
-  assert.deepEqual(result.entries.get('krigsvold')?.records, { CNAME: 'krigsvold.org' });
+  assert.deepEqual(result.entries.get('krigsvold')?.service, {
+    type: 'redirect', target: 'https://krigsvold.org', status: 301, preservePath: true, preserveQuery: true
+  });
   assert.equal(result.entries.get('krigsvold')?.owner.username, 'howardjp');
   assert.ok(result.reserved.includes('ellsworth'));
   assert.equal(result.institutions.get('ellsworth')?.holder, 'Office of the Ellsworth King of Arms');
@@ -64,4 +66,18 @@ test('institutional holder metadata is accepted', () => {
     holder: { kind: 'institution', name: 'Example Office' },
     records: { CNAME: 'example.org' }
   }), []);
+});
+
+test('redirect registrations accept https and reject unsafe targets', () => {
+  const service = { type: 'redirect', target: 'https://example.org', status: 301,
+    preservePath: true, preserveQuery: true };
+  assert.deepEqual(validateRegistration('sample', { owner: { username: 'sample' }, service }), []);
+  assert.notDeepEqual(validateRegistration('sample', { owner: { username: 'sample' }, service,
+    records: { CNAME: 'example.org' } }), []);
+  for (const target of ['http://example.org', 'https://localhost', 'https://nic.westarctica.net',
+    'https://127.0.0.1', 'https://example.org:8443', 'https://user@example.org']) {
+    assert.notDeepEqual(validateForwarding({ ...service, target }, 'sample'), [], target);
+  }
+  assert.notDeepEqual(validateForwarding({ ...service, status: 307,
+    target: 'https://example.org/?fixed=1' }, 'sample'), []);
 });

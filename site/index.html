@@ -44,7 +44,7 @@
         <p class="eyebrow">Westarctica Network Information Center</p>
         <h1 id="welcome-title">A common name for the<br class="wide-break" /> Westarctican network</h1>
         <p>The Network Information Center maintains a shared domain namespace for Westarctican institutions, offices, and individuals. As a service of the Westarctican College of Arms, it emphasizes enduring institutional identities and a publicly reviewable record.</p>
-        <p class="service-note"><strong>Registry in preparation.</strong> Public registrations are not yet open. The registry ledger is being established and does not yet publish DNS changes.</p>
+        <p class="service-note"><strong>Registry in preparation.</strong> Public registrations are not yet open. WNIC is piloting HTTPS forwarding for its first ordinary registration while general DNS management remains under development.</p>
         <a class="ink-link" href="https://github.com/westarctica/nic">View the Public Registry Repository <span aria-hidden="true">→</span></a>
       </div>
       <aside class="register-index" aria-labelledby="explore-title">
@@ -88,9 +88,14 @@
     <section class="institution-panel" id="institutions" aria-labelledby="institution-title">
       <div class="institution-heading"><img src="/images/waq-coa-badge.svg" alt="" width="84" height="84" loading="lazy" /><div><p class="eyebrow">Institutional assignments</p><h2 id="institution-title">Offices and institutions</h2></div></div>
       <div class="institution-records">
-        <div><code>ellsworth.westarctica.net</code><p>Office of the Ellsworth King of Arms · Assignment recorded; website and DNS activation pending.</p></div>
+        <div><code>ellsworth.westarctica.net</code><p>Office of the Ellsworth King of Arms · Institutional assignment; hosted on its own Cloudflare Worker.</p></div>
         <div><code>nic.westarctica.net</code><p>Westarctica Network Information Center · Registry headquarters and information service.</p></div>
       </div>
+    </section>
+    <section class="principles" id="email" aria-labelledby="email-title">
+      <div class="section-heading"><div><h2 id="email-title">Email Forwarding — Proposed</h2><p>Another way to establish a Westarctican identity</p></div><span class="prelaunch-mark">Not yet available</span></div>
+      <p>WNIC is also considering receiving-only <strong>@westarctica.net</strong> email aliases, forwarded to independently verified mailboxes through Cloudflare Email Routing. Applicants would retain their existing email provider, while WNIC manages the assigned public address. This service will require additional verification and policies before opening.</p>
+      <a class="ink-link" href="https://github.com/westarctica/nic/blob/main/docs/EMAIL-ROUTING.md">Read the Email Forwarding Plan <span aria-hidden="true">→</span></a>
     </section>
   </main>
 

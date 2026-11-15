@@ -4,7 +4,7 @@
 
 - `westarctica.net` is registered, and Cloudflare hosts its DNS.
 - The repository has a `CLOUDFLARE_API_TOKEN` **secret** and `CLOUDFLARE_ACCOUNT_ID` **variable**, as supplied by the administrator.
-- Only the narrowly scoped Krigsvold pilot workflow consumes the Cloudflare credentials, creating `krigsvold.westarctica.net` as an unproxied CNAME to `krigsvold.org` if absent. It cannot update, delete, or synchronize any other record.
+- Only the purpose-built WNIC forwarding workflow consumes the Cloudflare credentials. It manages approved redirect-list entries and exact forwarding-host DNS records, not general zone synchronization. A one-time migration from the previous Krigsvold CNAME is separately approved.
 - `nic.westarctica.net` is the intended public service; `ellsworth.westarctica.net` is separately reserved for the office of the Ellsworth King of Arms.
 
 ## Stage 1: publishing the website
@@ -32,6 +32,18 @@ Before accepting requests:
 4. Document identity/custodianship proof for institutional applicants.
 5. Announce registration availability on the website and publish request instructions.
 
+## Web forwarding publication (pilot)
+
+- The first ordinary entry is now `domains/krigsvold.json` with `service.type = "redirect"`.
+- `npm run preview:forwarding` prints the compiled Cloudflare redirect-list and proxied DNS placeholder, without using credentials.
+- On merge to main, `.github/workflows/publish-forwarding.yml` validates, previews, then attempts to update the WNIC-owned account redirect list and apply the exact forwarding-host DNS changes.
+- An account-level redirect rule is required. Cloudflare API token permissions must include **Zone Read**, **DNS Edit**, **Account Bulk URL Redirects Edit**, and **Account Filter Lists Edit**. Lack of permission must cause a fail-closed build.
+- The dedicated list is named `wnic_forwarding`. No other account lists or rules are to be edited. Existing list-entry changes need a separately reviewed update mechanism.
+- The reviewed Krigsvold migration is a one-time conversion from DNS-only CNAME to a proxied Cloudflare placeholder A record. The publisher installs and verifies redirect rules before the DNS change, and attempts to restore the legacy CNAME if creating the A record fails.
+- Neither `nic.westarctica.net` nor `ellsworth.westarctica.net` Worker Custom Domains are in the public registry ledger. Their routing is owned and managed separately.
+- Verify a test redirect with `curl -I https://krigsvold.westarctica.net/` after successful publication. Confirm nested paths and query-string preservation separately.
+- New or updated registrant forwarding entries require human review and are not automatically accepted from untrusted pull requests.
+
 ## Stage 3: general DNS publication (NOT YET IMPLEMENTED)
 
 **Never run a wholesale zone-reconciliation push against an uninventoried zone.**
@@ -49,11 +61,3 @@ The read-only `npm run preview:dns` command exports desired registrations but do
 
 The public repository is an audit ledger, not a confidential enrollment database. No private addresses, identification documents, or credentials belong in JSON registrations or pull requests. A future eligibility-verification process should store sensitive evidence outside the public repository.
 
-## Krigsvold first-registration pilot
-
-- File: `domains/krigsvold.json`; custodian `howardjp`.
-- Desired record: `krigsvold.westarctica.net` CNAME `krigsvold.org`, `proxied: false`.
-- `publish-krigsvold.yml` runs on approved changes to main; it validates the full registry and dry-runs before contacting Cloudflare.
-- It requires Zone Read and DNS Write token permissions in the account identified by `CLOUDFLARE_ACCOUNT_ID`.
-- Existing matching records are left unchanged; conflicts cause failure. No other record can be updated or deleted.
-- Destination web routing and HTTPS are separate future work.

@@ -9,6 +9,37 @@ const label = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 const login = /^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$/;
 const allowed = new Set(['A', 'AAAA', 'CAA', 'CNAME', 'DS', 'MX', 'NS', 'TXT']);
 
+export function validateForwarding(service, name) {
+  const errors = [];
+  const invalid = (msg) => errors.push(name + ': ' + msg);
+  if (!isObject(service) ||
+      Object.keys(service).some(key => !['type','target','status','preservePath','preserveQuery'].includes(key)) ||
+      service.type !== 'redirect') {
+    invalid('unsupported forwarding service');
+    return errors;
+  }
+  if (![301,302,307,308].includes(service.status)) invalid('invalid forwarding status');
+  if (service.preservePath !== true && service.preservePath !== false) invalid('preservePath must be boolean');
+  if (service.preserveQuery !== true && service.preserveQuery !== false) invalid('preserveQuery must be boolean');
+  if (typeof service.target !== 'string' || service.target.length > 2048 ||
+      !service.target.startsWith('https://')) {
+    invalid('redirect target must be an HTTPS URL, 2048 characters or fewer');
+    return errors;
+  }
+  let url;
+  try { url = new URL(service.target); }
+  catch { invalid('invalid redirect target'); return errors; }
+  if (url.protocol !== 'https:' || url.username || url.password ||
+      url.port || url.hash || !hostname(url.hostname) ||
+       isIP(url.hostname) !== 0 || url.hostname === zoneName || url.hostname.endsWith('.' + zoneName) ||
+      url.hostname.endsWith('.localhost') || url.hostname.endsWith('.internal') ||
+      url.hostname.endsWith('.local') || url.hostname.endsWith('.test')) {
+    invalid('target must be an external, public HTTPS hostname without credentials, custom ports or fragments');
+  }
+  if (url.search && service.preserveQuery) invalid('fixed target query is incompatible with preserveQuery');
+  return errors;
+}
+
 const isObject = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const validName = (s) => typeof s === 'string' && s.length <= 253 && s.split('.').every((part) => label.test(part) && !part.includes('--'));
 const hostname = (s) => typeof s === 'string' && s.length <= 253 && s.split('.').length >= 2 && validName(s.replace(/\.$/, ''));
@@ -23,11 +54,16 @@ export function validateRegistration(name, entry, reserved = []) {
   if (reserved.includes(firstLevel)) fail('reserved institutional name');
   if (!isObject(entry)) return [...errors, name + ': expected an object'];
   if (!isObject(entry.owner) || !login.test(entry.owner.username ?? '')) fail('owner.username must be a GitHub username');
-  if (Object.keys(entry).some((key) => !['owner', 'records', 'holder'].includes(key))) fail('unsupported top-level field');
+  if (Object.keys(entry).some((key) => !['owner', 'records', 'holder', 'service'].includes(key))) fail('unsupported top-level field');
   if (entry.holder !== undefined) {
     if (!isObject(entry.holder) || !['individual', 'institution'].includes(entry.holder.kind) ||
         typeof entry.holder.name !== 'string' || entry.holder.name.trim().length === 0 ||
         entry.holder.name.length > 120) fail('holder must contain kind (individual/institution) and name (1-120 characters)');
+  }
+  if (entry.service !== undefined) {
+    if (entry.records !== undefined) fail('registration cannot specify both DNS records and a forwarding service');
+    errors.push(...validateForwarding(entry.service, name));
+    return errors;
   }
   if (!isObject(entry.records) || Object.keys(entry.records).length === 0) {
     fail('records must be a nonempty object');

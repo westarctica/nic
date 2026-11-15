@@ -13,7 +13,13 @@ WNIC proposes to assign names below `westarctica.net` to approved people, instit
 - Nested names require control of the parent registration and may not be created beneath a delegated NS zone.
 
 ## Records
-The initial registry schema supports A, AAAA, CNAME, CAA, MX, TXT, NS and DS records. DNS delegation and its trust consequences are the registrant's responsibility. Records are subject to technical validation and manual review.
+The registry schema supports A, AAAA, CNAME, CAA, MX, TXT, NS and DS records. DNS delegation and its trust consequences are the registrant's responsibility. Records are subject to technical validation and manual review.
+
+### Web forwarding
+A registrant may request an explicit `service.type = "redirect"` instead of DNS records. WNIC handles HTTPS on the assigned hostname and returns an HTTP redirect to the approved target, with specified status and path/query behavior. Redirect registrations do not confer an entitlement to proxy content, impersonate another website, or use internal/private destinations. Existing forwarding changes and transfers require approval.
+
+### Email forwarding (not yet operational)
+Mailbox aliases such as `example@westarctica.net` are separate from subdomain registrations and require destination mailbox verification and explicit consent. Destinations must be kept confidential. No email addresses are operational until the Email Routing policy and MX configuration are approved.
 
 ## Conduct and changes
 No phishing, malware, impersonation, or illegal exploitation of the namespace. Names must be maintained by a reachable custodian. Transfers, revocations, and institutional succession will be recorded through a reviewable administrative process.

@@ -1,0 +1,42 @@
+name: Publish WNIC forwarding
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "domains/**"
+      - "data/dns-migrations.json"
+      - "scripts/registry.mjs"
+      - "scripts/forwarding-model.mjs"
+      - "scripts/publish-forwarding.mjs"
+      - ".github/workflows/publish-forwarding.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wnic-cloudflare-forwarding
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish approved redirects to Cloudflare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate the full NIC ledger
+        run: |
+          npm test
+          npm run validate
+          node --check scripts/publish-forwarding.mjs
+      - name: Preview proposed forwarding records (offline)
+        run: node scripts/publish-forwarding.mjs --dry-run
+      - name: Publish to WNIC Bulk Redirects list and DNS (fail-closed)
+        run: node scripts/publish-forwarding.mjs --apply
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}

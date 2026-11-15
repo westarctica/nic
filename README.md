@@ -2,7 +2,7 @@
 
 The **Westarctica Network Information Center** is an emerging registry for names beneath **westarctica.net**. Its planned public home is **nic.westarctica.net**.
 
-> **Prelaunch:** Public registrations are not yet being accepted. The first approved pilot registration is `krigsvold.westarctica.net`, with only that exact name eligible for automatic, non-destructive DNS publication.
+> **Prelaunch:** Public registrations are not yet being accepted. The first pilot is `krigsvold.westarctica.net`, now transitioning from DNS-only CNAME to a Cloudflare-managed HTTPS forwarding service.
 
 ## Design
 
@@ -42,17 +42,37 @@ npm run build:site
 
 To register an eventual public domain, see [CONTRIBUTING.md](CONTRIBUTING.md). The examples use documentation-only hostnames; no live DNS assignments are implied.
 
-## First ordinary registration
+## First ordinary registration and forwarding
 
-`domains/krigsvold.json` registers `krigsvold.westarctica.net` as a DNS-only CNAME pointing at `krigsvold.org`, with GitHub custodian `howardjp`.
+`domains/krigsvold.json` holds the first ordinary registration, managed by `howardjp`. The registration uses the new `service.type = "redirect"` schema to forward:
 
-A restricted pilot publisher validates the registry, refuses to change any pre-existing conflicting records, and creates only this hostname if absent. A matching CNAME is a no-op. Run `node scripts/publish-krigsvold.mjs --dry-run` to see the exact proposed DNS record without contacting Cloudflare.
+```text
+https://krigsvold.westarctica.net/some/path?query=1
+  → HTTP 301 →
+https://krigsvold.org/some/path?query=1
+```
 
-DNS alone does not configure the origin server or HTTPS for the added hostname; that may follow separately.
+This is **HTTP forwarding**, not a DNS CNAME alias. The destination's hosting provider does not need to accept `krigsvold.westarctica.net`.
+
+Cloudflare Bulk Redirects is the forwarding backend. `scripts/publish-forwarding.mjs` compiles all approved forwarding registrations into a dedicated `wnic_forwarding` redirect list and a shared account-level redirect rule. Each forwarding hostname receives a proxied Cloudflare DNS placeholder record. Before creating any record, the publisher inventories the current zone and rejects name conflicts. The one reviewed legacy CNAME migration is in `data/dns-migrations.json`.
+
+Review the proposed configuration without calling Cloudflare:
+
+```sh
+npm run preview:forwarding
+```
+
+**Publisher access:** GitHub organization-level `CLOUDFLARE_API_TOKEN` secret and `CLOUDFLARE_ACCOUNT_ID` variable, scoped to this repository. The token needs Zone Read, Zone DNS Edit, Account Bulk URL Redirects Edit, and Account Filter Lists Edit. Publication only runs from approved changes to `main`, and the publisher never updates the NIC or Ellsworth Worker Custom Domains.
+
+Cloudflare's redirect list API has distinct create and full-list replacement operations. Our initial publisher can append new entries but deliberately refuses to modify existing entries when the ledger differs until a separate update/rollback workflow is reviewed.
+
+## Planned email forwarding
+
+WNIC may also offer receiving-only `@westarctica.net` aliases through Cloudflare Email Routing. This is a **separate** registration service with verified private destinations, independent from subdomain DNS and HTTP forwarding. See [Email Routing plan](docs/EMAIL-ROUTING.md).
 
 ## Safety before Cloudflare publication
 
-Although GitHub repository secrets include `CLOUDFLARE_API_TOKEN` and the `CLOUDFLARE_ACCOUNT_ID` variable, **only the one-record Krigsvold pilot workflow consumes them**. General DNS publishing still requires a current zone inventory, explicit management boundaries, approval, protected branches, and a rollback plan. See [operations](docs/OPERATIONS.md).
+Although GitHub repository secrets include `CLOUDFLARE_API_TOKEN` and the `CLOUDFLARE_ACCOUNT_ID` variable, **only the purpose-built forwarding publisher currently consumes them**. General DNS synchronization and email routing require separate review. A successful redirect publication does not authorize modifications to unrelated account lists, Worker Custom Domains, or Mail Exchange (MX) records. See [operations](docs/OPERATIONS.md).
 
 ## Institutional continuity
 
