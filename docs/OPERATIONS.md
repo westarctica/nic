@@ -4,7 +4,7 @@
 
 - `westarctica.net` is registered, and Cloudflare hosts its DNS.
 - The repository has a `CLOUDFLARE_API_TOKEN` **secret** and `CLOUDFLARE_ACCOUNT_ID` **variable**, as supplied by the administrator.
-- Only the purpose-built WNIC forwarding workflow consumes the Cloudflare credentials. It manages approved redirect-list entries and exact forwarding-host DNS records, not general zone synchronization. A one-time migration from the previous Krigsvold CNAME is separately approved.
+- Only the purpose-built WNIC forwarding and institutional-CNAME workflows consume the Cloudflare credentials. It manages approved redirect-list entries and exact forwarding-host DNS records, not general zone synchronization. A one-time migration from the previous Krigsvold CNAME is separately approved.
 - `nic.westarctica.net` is the intended public service; `ellsworth.westarctica.net` is separately reserved for the office of the Ellsworth King of Arms.
 
 ## Stage 1: publishing the website
@@ -61,3 +61,29 @@ The read-only `npm run preview:dns` command exports desired registrations but do
 
 The public repository is an audit ledger, not a confidential enrollment database. No private addresses, identification documents, or credentials belong in JSON registrations or pull requests. A future eligibility-verification process should store sensitive evidence outside the public repository.
 
+
+## College of Arms CNAME alias
+
+`data/institutional-cnames.json` requests a proxied CNAME from
+`collegeofarms.westarctica.net` to `ellsworth.westarctica.net`.
+This separate institutional publisher accepts only reserved, otherwise unused
+labels targeting an assigned institutional name. It creates missing records,
+accepts exact existing matches, and refuses conflicting records. It never updates
+or deletes DNS records or manages Worker Custom Domains.
+
+Merge this NIC change first and confirm the institutional CNAME workflow succeeds.
+Then merge the linked College of Arms Worker routing change, which attaches
+`collegeofarms.westarctica.net/*` to the existing `college-of-arms` Worker and
+explicitly retains the `ellsworth.westarctica.net` Custom Domain.
+The deployment credential for that Worker must permit Workers Routes edits.
+
+The CNAME is proxied so the Worker route and Cloudflare HTTPS can serve requests
+for the alias hostname. DNS alone does not configure HTTP Host handling.
+Public DNS responses for a proxied CNAME may contain Cloudflare addresses rather
+than expose the CNAME target; verify the record type and target through Cloudflare
+and verify actual content through HTTPS.
+
+After both deployments, compare the homepage and a real armorial page at both
+hostnames, including a path and query string, and verify Ellsworth remains live.
+Changing or removing an alias requires a separately reviewed migration; deleting
+the alias-map entry does not remove its live DNS record.
