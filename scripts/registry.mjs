@@ -31,7 +31,7 @@ export function validateForwarding(service, name) {
   catch { invalid('invalid redirect target'); return errors; }
   if (url.protocol !== 'https:' || url.username || url.password ||
       url.port || url.hash || !hostname(url.hostname) ||
-      url.hostname === zoneName || url.hostname.endsWith('.' + zoneName) ||
+       isIP(url.hostname) !== 0 || url.hostname === zoneName || url.hostname.endsWith('.' + zoneName) ||
       url.hostname.endsWith('.localhost') || url.hostname.endsWith('.internal') ||
       url.hostname.endsWith('.local') || url.hostname.endsWith('.test')) {
     invalid('target must be an external, public HTTPS hostname without credentials, custom ports or fragments');
