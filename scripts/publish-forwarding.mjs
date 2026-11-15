@@ -261,16 +261,18 @@ for (const { item, action, owned } of inventory) {
         throw new Error('Unexpected DNS create result after migration');
       }
     } catch (error) {
+      let restored = false;
       try {
         await cf(path, 'POST', {
           type: old.type, name: old.name, content: old.content,
           ttl: old.ttl ?? 1, proxied: old.proxied
         });
-        throw new Error('DNS migration failed; legacy CNAME restored: ' + error.message);
+        restored = true;
       } catch (restoreError) {
-        throw new Error('DNS migration failed and restoration needs inspection: ' +
+        throw new Error('DNS migration failed and rollback needs manual inspection: ' +
           error.message + ' / ' + restoreError.message);
       }
+      if (restored) throw new Error('DNS migration failed; previous CNAME restored: ' + error.message);
     }
     console.log('Migrated ' + item.hostname + ' from legacy CNAME to proxied forwarding A record.');
   } else {
